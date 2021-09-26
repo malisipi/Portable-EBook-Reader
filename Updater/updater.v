@@ -3,8 +3,9 @@ import net.http
 import os
 
 updater_version:="0.1"
-version_file:="http://localhost/version.txt"
-update_file:="http://localhost/app.zip"
+version_file:="https://malisipi.github.io/Portable-EBook-Reader/version.txt"
+update_file:="https://malisipi.github.io/Portable-EBook-Reader/Update.zip"
+app_folder:="EBook"
 
 print("Updater:"+updater_version+"\n")
 print("Checking Updates..."+"\n")
@@ -27,13 +28,8 @@ if current_version.int() < latest_version.text.split("~")[0].int() {
       print("Check Wi-fi Connection ::err:NoWifi")
       exit(1)
    }
-   os.mkdir("update") or {print("Old Update Folder Found! > Ignored ::err:CreateUpdateFolder\n")} // Create directory to extract updates
    print("Extracting Updates...\n")
-   szip.extract_zip_to_dir("./update.zip",os.getwd()) or {panic("::err:ExtractUpdate")} // Extract Updates
-   print("Applying Updates\n")
-   os.mv("Update",os.getwd()) or {panic("::err:ApplyUpdate")}
-   os.rmdir("update") or {print("Updates File Can't Deleted > Ignored ::err:RemoveUpdateFolder\n")}
-   os.rm("update.zip") or {print("Updates File Can't Deleted > Ignored ::err:RemoveUpdateZip\n")}
+   szip.extract_zip_to_dir("./update.zip",app_folder) or {panic("::err:ExtractUpdate")} // Extract Updates
    os.write_file("version.txt",latest_version.text.split("~")[0]) or {panic("::err:UpdateVersionFile")}
    print("Done\n")
 } else {

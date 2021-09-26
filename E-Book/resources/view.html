@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body oncontextmenu="return false;">
+    <div id="imageContainer"><img onload="changeBodySize();" id="theImage" draggable="false"/></div>
+    <script>
+        urlParam = new URLSearchParams(location.search);
+        document.getElementById("theImage").src = urlParam.get("page");
+
+        function changeBodySize(){
+            if(document.querySelector("#theImage").getBoundingClientRect().height>window.innerHeight){
+                document.body.style.height=(document.querySelector("#theImage").getBoundingClientRect().height+100)+"px";
+            } else {
+                document.body.style.height=window.innerHeight+"px";
+            }
+            if(document.querySelector("#theImage").getBoundingClientRect().width>window.innerWidth){
+                document.body.style.width=(document.querySelector("#theImage").getBoundingClientRect().width+100)+"px";
+            } else {
+                document.body.style.width=window.innerWidth+"px";
+            }
+        }
+
+        window.onresize = changeBodySize;
+
+        function mini(){
+            document.querySelector("#theImage").style.width=document.querySelector("#theImage").getBoundingClientRect().width*0.75+"px";
+            changeBodySize();
+        }
+
+        function maxi(){
+            document.querySelector("#theImage").style.width=document.querySelector("#theImage").getBoundingClientRect().width*1.33+"px";
+            changeBodySize();
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 20px;
+            height: 20px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #555555; 
+        }
+        
+        ::-webkit-scrollbar-corner{
+            background:#555555;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #999999; 
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dddddd; 
+        }
+
+        html,button,input:disabled{
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body{
+            position: absolute;
+        }
+
+        #imageContainer{
+            position: absolute;
+            top: 0%;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</body>
+</html>
